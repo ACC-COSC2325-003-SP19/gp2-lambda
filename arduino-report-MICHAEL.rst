@@ -7,8 +7,11 @@ Group Project 2: Hardware Toy Store
 
 Chosen Device Description
 =========================
-placeholder
 (Source, Basic Features)
+
+* Arduino UNO board
+* A B USB cable, sometimes called a "USB printer cable". This powers the UNO board but also sends data to program it. ( `#1b`_ )
+* SparkFun Voice Box Shield (no longer in production)
 
 Controlling the device
 ======================
@@ -31,4 +34,6 @@ Arman's References
 
 Michael's References
 ====================
-1b.
+1b. https://www.arduino.cc/en/Guide/ArduinoUno
+
+.. _#1b: https://www.arduino.cc/en/Guide/ArduinoUno
