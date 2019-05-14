@@ -73,7 +73,7 @@ While it's not that difficult to produce modulated voices with the resources the
 
 So going off this dictionary and referencing the 8-bit sound codes provided in the documentation, we were able to begin stringing together our own sentences using the SpeakJet. For example, if I wanted to get the device to say "Hello World", I would look at the dictionary entries for Hello (\HE \FAST \EHLE \LO \OWWW) and World (\WW \AXRR \LE \ED), then reference the allophone chart to get the 8-bit codes associated with each of those phonetic sounds. The SpeakJet takes in arrays of strings to decode, so the SpeakJet compatible equivalent of "Hello World" would be::
 
-	//                Hello					 World
+	//                Hello			 World
 	char message[] = {183, 7, 159, 146, 164, 147, 151, 145, 176};
 	
 As you can tell this process is pretty tedious when you're attempting to string together full-blown paragraphs worth of words. It's a whole bunch of searching, referencing, cross-referencing and hoping you actually type the correct 8-bit code into the program without making an error at any point of the way. You could probably find a way to program the automation of the conversion of the words found in the dictionary to SpeakJet compliant 8-bit codes fairly easily to reduce the load of the programmer though.
@@ -141,20 +141,20 @@ The next step in setting up this hardware to work is inside the void setup() fun
 Next we have the code that specifies what sounds/words should actually be sent to the SpeakJet during runtime. This is pretty simple stuff, just arrays filled with the previously explained 8-bit data codes.::
 
 	char message1[] = {3, 3, 183, 7, 159, 146, 164, 183, 7, 160, 140, 131, 141,
-					   184, 8, 163, 152, 8, 160, 8, 191, 139, 174, 154};
+			   184, 8, 163, 152, 8, 160, 8, 191, 139, 174, 154};
 
-	//char message2[] = {3, 8, 169, 8, 129, 187, 5, 8, 129, 167, 5, 154, 128, 5,
-						 191, 131, 8, 187, 191, 5, 8, 134, 166, 5, 8, 169, 8, 128,
-						 5, 187, 198, 8, 128, 196, 165, 131, 191};
+       //char message2[] = {3, 8, 169, 8, 129, 187, 5, 8, 129, 167, 5, 154, 128, 5,
+			    191, 131, 8, 187, 191, 5, 8, 134, 166, 5, 8, 169, 8, 128,
+			    5, 187, 198, 8, 128, 196, 165, 131, 191};
 
 	char message3[] = {3, 8, 169, 8, 129, 187, 5, 191, 131, 8, 187, 191, 5, 8, 129,
-					   167, 5, 186, 153, 5, 187, 187, 128, 128, 5, 137, 164, 5, 131,
-					   187, 187, 5, 187, 187, 128, 128, 5, 8, 191, 162, 5, 8, 190,
-					   148, 8, 128, 5, 8, 191, 162, 5, 186, 157, 166};
+			   167, 5, 186, 153, 5, 187, 187, 128, 128, 5, 137, 164, 5, 131,
+			   187, 187, 5, 187, 187, 128, 128, 5, 8, 191, 162, 5, 8, 190,
+			   148, 8, 128, 5, 8, 191, 162, 5, 186, 157, 166};
 
 	char message4[] = {3, 8, 169, 8, 129, 187, 147, 134, 167, 195, 7, 148, 128, 154,
-					   191, 129, 176, 171, 157, 152, 140, 154, 141, 8, 132, 8, 141,
-					   177, 140, 157, 197, 154, 159};
+			   191, 129, 176, 171, 157, 152, 140, 154, 141, 8, 132, 8, 141,
+		           177, 140, 157, 197, 154, 159};
 	
 Lastly, the code that actually drives this device during runtime is inside the void loop() function. This just calls the speakjet SoftwareSerial onject to 'print' the message arrays and essentially execute. The delays present between the call statements prevent the SpeakJet from attempting to "speak over" the line that is currently being spoken.::
 
