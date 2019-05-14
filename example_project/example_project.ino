@@ -3,6 +3,7 @@ Voice Box Demo
 Written by Ryan Owens of SparkFun Electronics
 Edited by Arman Levanti
 
+Source: https://github.com/sparkfun/VoiceBox_Shield/tree/V_1.6
 */
 
 //Soft serial library used to send serial commands on pin 2 instead of regular serial pin.
@@ -85,12 +86,10 @@ void setup()
 
 void loop()
 {
- 
   speakjet.print(message1);
   delay(3000);
   speakjet.print(message3);
   delay(3800);
   speakjet.print(message4);
   while(1);
-  
 }

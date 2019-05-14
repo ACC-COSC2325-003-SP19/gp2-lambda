@@ -5,8 +5,8 @@ Group Project 2: Hardware Toy Store
 **Lab Report: Lambda Group**
 ============================
 
-Chosen Device Description
-=========================
+Chosen Device Description [Michael Beebower]
+============================================
 (Source, Basic Features)
 
 Arduino UNO Board Components
@@ -78,14 +78,95 @@ So going off this dictionary and referencing the 8-bit sound codes provided in t
 	
 As you can tell this process is pretty tedious when you're attempting to string together full-blown paragraphs worth of words. It's a whole bunch of searching, referencing, cross-referencing and hoping you actually type the correct 8-bit code into the program without making an error at any point of the way. You could probably find a way to program the automation of the conversion of the words found in the dictionary to SpeakJet compliant 8-bit codes fairly easily to reduce the load of the programmer though.
 
-Device demonstration [Arman Levanti]
+Device Demonstration [Arman Levanti]
 ====================================
-Our demonstration will show a segment of code which will pre-initialize and use the SpeakJet device to modularize sentences that we have specified. This program was very simple to make as SparkFun provides an fragment of example code available on their website. ( `#3a`_ ) This helped to work through the configuration process of initializing the SpeakJet.
+Our demonstration will show a segment of code which will pre-initialize and use the SpeakJet device to modularize sentences that we have specified. This program was very simple to make as SparkFun provides an fragment of example code available on their website. ( `#3a`_ ) This helped to work through the configuration process of initializing the SpeakJet within the program.
 
 Project Code [Arman Levanti]
 ============================
-placeholder
-(Any code your team authored. SOurces for other parts are fine)
+Most of the code implementation aside from the tedious work of continually referencing the datasheet is actually pretty straightforward. The majority of the code relies on the "SoftwareSerial" library to interact with the Arduino and send it data over serial communication to the pins of the board. ( `#4a`_ ) This block of code initializes the locations of the required pins on the board as well as creates a object of the "SoftwareSerial" library which is supported by the Arduino Uno by default. We use this created 'speakjet' object later on to actually interface with the device and send it data. This code was provided publicly by the SparkFun team inside their documentation repo. ( `#3a`_ ) ::
+
+	//Soft serial library used to send serial commands on pin 2 instead of regular serial pin.
+	#include <SoftwareSerial.h>
+
+	//Define the Pin Numbers for the sketch.
+	#define E0  5
+	#define E1  6
+	#define E2  7
+	#define E3  8
+	#define E4  9
+	#define E5  10
+	#define E6  11
+	#define E7  12
+
+	#define RDY  13
+	#define RES  3
+	#define SPK  4
+
+	#define txPin  2
+
+	//Create a SoftSerial Object
+	SoftwareSerial speakjet = SoftwareSerial(0, txPin); 
+
+The next step in setting up this hardware to work is inside the void setup() function, which further establishes a link between the Arduino and the gadget on runtime. This code was also provided publicly by the SparkFun team. ( `#3a`_ ) ::
+
+	void setup()  
+	{
+	  //Configure the pins for the SpeakJet module
+	  pinMode(txPin, OUTPUT);
+	  pinMode(SPK, INPUT);
+	  
+	  //Set up a serial port to talk from Arduino to the SpeakJet module on pin 3.
+	  speakjet.begin(9600);
+	  
+	  //Configure the Ready pin as an input
+	  pinMode(RDY, INPUT);
+	  
+	  //Configure Reset line as an output
+	  pinMode(RES, OUTPUT);
+		   
+	  //Configure all of the Event pins as outputs from Arduino, and set them Low.
+	  for(int i=E0; i<=E7; i++)
+	  {
+		pinMode(i, OUTPUT);
+		digitalWrite(i, LOW);
+	  }
+	  
+	  //All I/O pins are configured. Reset the SpeakJet module
+	  digitalWrite(RES, LOW);
+	  delay(100);
+	  digitalWrite(RES, HIGH);
+	}
+
+Next we have the code that specifies what sounds/words should actually be sent to the SpeakJet during runtime. This is pretty simple stuff, just arrays filled with the previously explained 8-bit data codes.::
+
+	char message1[] = {3, 3, 183, 7, 159, 146, 164, 183, 7, 160, 140, 131, 141,
+					   184, 8, 163, 152, 8, 160, 8, 191, 139, 174, 154};
+
+	//char message2[] = {3, 8, 169, 8, 129, 187, 5, 8, 129, 167, 5, 154, 128, 5,
+						 191, 131, 8, 187, 191, 5, 8, 134, 166, 5, 8, 169, 8, 128,
+						 5, 187, 198, 8, 128, 196, 165, 131, 191};
+
+	char message3[] = {3, 8, 169, 8, 129, 187, 5, 191, 131, 8, 187, 191, 5, 8, 129,
+					   167, 5, 186, 153, 5, 187, 187, 128, 128, 5, 137, 164, 5, 131,
+					   187, 187, 5, 187, 187, 128, 128, 5, 8, 191, 162, 5, 8, 190,
+					   148, 8, 128, 5, 8, 191, 162, 5, 186, 157, 166};
+
+	char message4[] = {3, 8, 169, 8, 129, 187, 147, 134, 167, 195, 7, 148, 128, 154,
+					   191, 129, 176, 171, 157, 152, 140, 154, 141, 8, 132, 8, 141,
+					   177, 140, 157, 197, 154, 159};
+	
+Lastly, the code that actually drives this device during runtime is inside the void loop() function. This just calls the speakjet SoftwareSerial onject to 'print' the message arrays and essentially execute. The delays present between the call statements prevent the SpeakJet from attempting to "speak over" the line that is currently being spoken.::
+
+	void loop()
+	{
+	  speakjet.print(message1);
+	  delay(3000);
+	  speakjet.print(message3);
+	  delay(3800);
+	  speakjet.print(message4);
+	  while(1);
+	}
 
 Arman's References
 ==================
@@ -95,9 +176,12 @@ Arman's References
 
 3a. https://github.com/sparkfun/VoiceBox_Shield/tree/V_1.6
 
+4a. https://www.arduino.cc/en/Reference/SoftwareSerial
+
 .. _#1a: https://www.sparkfun.com/datasheets/Components/General/speakjet-usermanual.pdf
 .. _#2a: http://www.sparkfun.com/datasheets/Components/General/SpeakJet-dictionary.zip
 .. _#3a: https://github.com/sparkfun/VoiceBox_Shield/tree/V_1.6
+.. _#4a: https://www.arduino.cc/en/Reference/SoftwareSerial
 
 Michael's References
 ====================
