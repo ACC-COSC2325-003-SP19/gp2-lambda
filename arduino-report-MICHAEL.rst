@@ -25,7 +25,7 @@ Basic Features: Voice Box Shield model 9799
 * 'SPK+/-' pins to connect a speaker for audio output
 * Serial Line
 * 8 event input lines which are connected to digital pins 5-12
-* 6 or 8-pin stackable headers for mounting onto Arduino board ( `#1b`_ )
+* (optional) 6 or 8-pin stackable headers ( `#1b`_ )
 
 .. image:: img/09279-1.jpg
 
