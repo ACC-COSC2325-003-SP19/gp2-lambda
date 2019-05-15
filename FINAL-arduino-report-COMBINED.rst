@@ -84,6 +84,8 @@ Our demonstration will show a segment of code which will pre-initialize and use 
 
 Project Code [Arman Levanti]
 ============================
+**It's important to note that due to this device's complexity I do not believe that it's possible to fully interact with the SpeakJet exclusively using AVR Assembly Language. To establish communication between the board and the program it requires the use of an object created from the SoftwareSerial.h library, I do not think there is any way to bypass this requirement and send data to the SpeakJet in a strictly manual fashion. My research on the web regarding this device primarily result in projects coded in C++ language, as well as the official documentation sources found on SparkFun's webpage also using C++. Because of this fact, I have decided to use C++ to demonstrate this piece of hardware.**
+
 Most of the code implementation aside from the tedious work of continually referencing the datasheet is actually pretty straightforward. The majority of the code relies on the "SoftwareSerial" library to interact with the Arduino and send it data over serial communication to the pins of the board. ( `#4a`_ ) This block of code initializes the locations of the required pins on the board as well as creates a object of the "SoftwareSerial" library which is supported by the Arduino Uno by default. We use this created 'speakjet' object later on to actually interface with the device and send it data. This code was provided publicly by the SparkFun team inside their documentation repo. ( `#3a`_ ) ::
 
 	//Soft serial library used to send serial commands on pin 2 instead of regular serial pin.
