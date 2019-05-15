@@ -1,9 +1,19 @@
 /*
 Voice Box Demo
 Written by Ryan Owens of SparkFun Electronics
+Source: https://github.com/sparkfun/VoiceBox_Shield/tree/V_1.6
 Edited by Arman Levanti
 
-Source: https://github.com/sparkfun/VoiceBox_Shield/tree/V_1.6
+Disclaimer: It's important to note that due to this device's complexity I do not believe
+that it's possible to fully interact with the SpeakJet exclusively using AVR
+Assembly Language. To establish communication between the board and the program
+it requires the use of an object created from the SoftwareSerial.h library,
+I do not think there is any way to bypass this requirement and send data to the
+SpeakJet in a strictly manual fashion. My research on the web regarding this
+device primarily result in projects coded in C++ language, as well as the official
+documentation sources found on SparkFun's webpage also using C++. Because of this
+fact, I have decided to use C++ to demonstrate this piece of hardware.
+
 */
 
 //Soft serial library used to send serial commands on pin 2 instead of regular serial pin.
